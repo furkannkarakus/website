@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Furkan Karakuş — Videographer & Photographer</title>
+  <meta name="description" content="Furkan Karakuş — Videographer & Photographer resmi portfolyo sitesi." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#090a0c',
+            body: '#0e1013',
+            surface: '#14171b',
+            'surface-elevated': '#1a1d23',
+            amber: {
+              400: '#fbbf24',
+              500: '#e67e22',
+              600: '#d35400'
+            },
+            emerald: {
+              400: '#34d399',
+              500: '#10b981'
+            }
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+
+  <!-- Lucide Icons & Custom CSS -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-obsidian text-slate-100 font-sans selection:bg-amber-500 selection:text-black min-h-screen">
+
+  <!-- Hafif Film Gren Kaplaması -->
+  <div id="filmGrainOverlay" class="film-grain"></div>
+
+  <!-- Kompakt Kamera Vizör İmleci -->
+  <div id="cameraCursorWrapper" class="camera-cursor-wrapper">
+    <div id="cameraReticle" class="camera-reticle">
+      <span class="reticle-corner reticle-tl"></span>
+      <span class="reticle-corner reticle-tr"></span>
+      <span class="reticle-corner reticle-bl"></span>
+      <span class="reticle-corner reticle-br"></span>
+      <span class="reticle-dot"></span>
+      <span id="reticleFlash" class="reticle-flash"></span>
+
+      <!-- Mikro HUD Göstergesi -->
+      <div id="reticleHud" class="reticle-hud">
+        <span class="reticle-af">AF-C</span>
+        <span class="reticle-divider">//</span>
+        <span id="cursorFocalText" class="reticle-focal">35mm ƒ/1.8</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Üst Menü / Navbar -->
+  <header class="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-3.5 bg-obsidian/95 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="#hero" class="flex items-center gap-3 group" data-focal="Ana Sayfa">
+        <div class="w-9 h-9 rounded-xl overflow-hidden border border-white/15 group-hover:border-amber-500 transition shrink-0 bg-surface shadow-md">
+          <img src="logo.jpg" alt="Furkan Karakuş Logo" class="w-full h-full object-cover" />
+        </div>
+        <div>
+          <span class="font-display font-bold text-base tracking-tight text-white block group-hover:text-amber-400 transition">
+            Furkan Karakuş
+          </span>
+          <span class="font-sans text-xs text-slate-400 block -mt-0.5">Videographer & Photographer</span>
+        </div>
+      </a>
+
+      <!-- Menü Linkleri (Okunaklı & Turuncu Hover) -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-200">
+        <a href="#hero" class="hover:text-amber-400 transition" data-focal="Ana Sayfa">Ana Sayfa</a>
+        <a href="#portfolio" class="hover:text-amber-400 transition" data-focal="Fotoğraflar">Fotoğraflar</a>
+        <a href="#gear" class="hover:text-amber-400 transition" data-focal="Ekipmanlar">Çantamda Neler Var?</a>
+        <a href="#about" class="hover:text-amber-400 transition" data-focal="Hakkımda">Hakkımda</a>
+        <a href="#minigame" class="text-slate-200 hover:text-amber-400 transition flex items-center gap-1.5" data-focal="Odağı Yakala">
+          <i data-lucide="crosshair" class="w-3.5 h-3.5 text-amber-500"></i>
+          <span>Odağı Yakala</span>
+        </a>
+        <a href="#contact" class="hover:text-amber-400 transition" data-focal="İletişim">İletişim</a>
+      </nav>
+
+      <!-- Aksiyon & Ses Butonu (Sağdaki Turuncu Buton Kaldırıldı) -->
+      <div class="flex items-center gap-3">
+        <button id="soundToggleBtn" class="hud-badge text-xs hover:border-amber-500 cursor-pointer" title="Ses Efektlerini Aç/Kapat" data-focal="Ses">
+          <i id="soundToggleIcon" data-lucide="volume-x" class="w-3.5 h-3.5"></i>
+          <span id="soundToggleLabel" class="hidden sm:inline">SES: KAPALI</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 1. Ana Bölüm / Hero -->
+  <section id="hero" class="relative min-h-[85vh] flex items-center justify-center pt-28 pb-16 px-4 md:px-8 overflow-hidden">
+    <!-- Arka Plan Görseli -->
+    <div class="absolute inset-0 -z-10 overflow-hidden opacity-20">
+      <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=2000&q=80" alt="Arka Plan" class="w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/80 to-transparent"></div>
+    </div>
+
+    <!-- Sinematik Volumetrik Sahne Işıkları & Anamorfik Lens Flare Tuvali -->
+    <canvas id="heroVolumetricCanvas" class="hero-volumetric-canvas" aria-hidden="true"></canvas>
+
+    <div class="max-w-4xl mx-auto text-center space-y-6 relative z-10">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 font-mono text-xs text-amber-400">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+        <span>VIDEOGRAPHER & PHOTOGRAPHER</span>
+      </div>
+
+      <div class="space-y-2">
+        <h1 class="font-display text-5xl sm:text-7xl md:text-8xl font-extrabold text-white tracking-tight leading-tight">
+          Furkan Karakuş
+        </h1>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+        <a href="#portfolio" class="px-6 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-black font-semibold text-sm transition transform hover:-translate-y-0.5 shadow-lg shadow-amber-500/20" data-focal="Portfolyo">
+          Portfolyoyu İncele
+        </a>
+        <a href="#about" class="px-6 py-3.5 rounded-xl bg-surface hover:bg-surface-elevated border border-white/15 text-slate-200 hover:text-amber-400 font-medium text-sm flex items-center gap-2 transition hover:border-amber-500/50" data-focal="Hakkımda">
+          <i data-lucide="user" class="w-4 h-4 text-amber-500"></i>
+          <span>Hakkımda</span>
+        </a>
+        <a href="#contact" class="px-6 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white hover:text-amber-400 transition" data-focal="İletişim">
+          İletişim
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Portfolyo Bölümü (Dynamic Pexels CMS Entegrasyonu Destekli) -->
+  <section id="portfolio" class="py-20 px-4 md:px-8 border-t border-white/10 bg-body">
+    <div class="max-w-6xl mx-auto space-y-10">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="font-mono text-xs text-amber-500 uppercase tracking-wider">// SEÇİLMİŞ ÇALIŞMALAR</span>
+            <span class="text-white/20">•</span>
+            <button id="pexelsSyncBtn" class="font-mono text-[10px] text-emerald-400 hover:text-emerald-300 flex items-center gap-1 bg-black/50 px-2 py-0.5 rounded border border-white/10 cursor-pointer" title="Pexels CMS API ve Koleksiyon Ayarları">
+              <i data-lucide="cloud-cog" class="w-3 h-3"></i>
+              <span id="pexelsSyncStatus">PEXELS CMS</span>
+            </button>
+          </div>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-white">Fotoğraflar</h2>
+          <p class="text-slate-400 text-sm mt-1">
+            Tam ekran incelemek için görsellere tıklayabilirsiniz.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bento Grid Container -->
+      <div id="portfolioBentoGrid" class="grid grid-cols-12 gap-6"></div>
+
+      <!-- Sayfalama (Pagination) -->
+      <div id="portfolioPagination" class="flex items-center justify-center gap-2 pt-4"></div>
+
+      <!-- 2.1 Ham Görüntü vs Renk Kurgusu Karşılaştırması -->
+      <div class="mt-16 p-6 md:p-8 rounded-2xl bg-surface border border-white/10 space-y-6">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <span class="font-mono text-xs text-emerald-400 uppercase tracking-wider block">// RENK VE POST-PRODÜKSİYON</span>
+            <h3 class="font-display text-xl md:text-2xl font-bold text-white">Ham Görüntü (RAW) vs. Renk Kurgusu</h3>
+            <p class="text-slate-400 text-sm mt-1">Sürgüyü sağa ve sola kaydırarak ham sensör görüntüsü ile nihai renk düzenlemesi arasındaki farkı inceleyin.</p>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs text-slate-400">
+            <span class="px-2.5 py-1 rounded bg-black/60 border border-white/10">SOL: DÜZENLENMİŞ</span>
+            <span class="px-2.5 py-1 rounded bg-black/60 border border-white/10">SAĞ: HAM RAW</span>
+          </div>
+        </div>
+
+        <div id="rawGradedContainer" class="raw-graded-container relative w-full h-80 md:h-[480px] rounded-xl cursor-ew-resize border border-white/15 overflow-hidden shadow-2xl">
+          <img src="raw-landscape.jpg" alt="Ham Görüntü (RAW / Flat)" class="absolute inset-0 w-full h-full object-cover pointer-events-none" />
+          <span class="absolute top-4 right-4 hud-badge text-xs bg-black/85 text-slate-400 pointer-events-none border border-white/10">HAM RAW / LOG</span>
+
+          <div id="gradedImageWrapper" class="absolute inset-0 w-full h-full pointer-events-none" style="clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);">
+            <img src="graded-landscape.jpg" alt="Renkli Görüntü (Graded)" class="w-full h-full object-cover" />
+            <span class="absolute top-4 left-4 hud-badge text-xs bg-black/85 text-amber-400 pointer-events-none border border-amber-500/30">RENK KURGUSU // GRADED</span>
+          </div>
+
+          <div id="rawGradedSlider" class="raw-graded-slider" style="left: 50%;">
+            <div class="raw-graded-handle">
+              <i data-lucide="code-2" class="w-4 h-4 text-emerald-400 rotate-90"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. Çantamda Neler Var? (Madde Madde Teknik Özellikler & Programlar) -->
+  <section id="gear" class="py-20 px-4 md:px-8 border-t border-white/10 bg-obsidian">
+    <div class="max-w-6xl mx-auto space-y-12">
+      
+      <div class="border-b border-white/10 pb-6">
+        <span class="font-mono text-xs text-amber-500 uppercase tracking-wider block mb-1">// PRODÜKSİYON EKİPMANLARI</span>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-white">Çantamda Neler Var?</h2>
+        <p class="text-slate-400 text-sm mt-1 max-w-2xl">
+          Çekimlerimde ve kurgu süreçlerimde aktif olarak kullandığım donanımlar ve yazılımlar.
+        </p>
+      </div>
+
+      <!-- Ekipmanlar (Sony a6500, 18-105mm f4 G, Insta360 GO 3S) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-5 space-y-3" id="gearListContainer"></div>
+        <div class="lg:col-span-7" id="gearDetailPanel"></div>
+      </div>
+
+      <!-- Kullandığım Programlar (Adobe Premiere Pro, Lightroom, Photoshop) -->
+      <div class="pt-6 border-t border-white/10 space-y-6">
+        <div class="flex items-center gap-2">
+          <i data-lucide="laptop" class="w-5 h-5 text-amber-500"></i>
+          <h3 class="font-display text-xl md:text-2xl font-bold text-white">Kullandığım Programlar & Yazılımlar</h3>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="softwareListContainer"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. Hakkımda -->
+  <section id="about" class="py-20 px-4 md:px-8 border-t border-white/10 bg-surface">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-5">
+          <div class="relative rounded-2xl overflow-hidden border border-white/15 p-2 bg-black/60 shadow-2xl">
+            <img src="furkan-karakus.jpg" alt="Furkan Karakuş" class="w-full h-[400px] md:h-[480px] object-cover object-[center_10%] rounded-xl shadow-lg" />
+            <div class="absolute bottom-5 left-5 right-5 p-3.5 rounded-xl bg-black/85 backdrop-blur-md border border-white/15 font-mono text-xs shadow-xl">
+              <span class="text-amber-400 block text-[11px] font-semibold">// VIDEOGRAPHER & PHOTOGRAPHER</span>
+              <p class="text-white font-medium text-sm mt-0.5">Furkan Karakuş</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 space-y-6">
+          <span class="font-mono text-xs text-amber-500 uppercase tracking-wider block">// HAKKIMDA</span>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-white leading-tight">
+            Görsel anlatımı ve özgün anları yakalamayı tutkuyla sürdürüyorum.
+          </h2>
+          
+          <div class="space-y-4 text-slate-300 text-sm md:text-base leading-relaxed">
+            <p>
+              Merhaba! Ben Furkan, 22 yaşındayım ve Yalova Üniversitesi'nde öğrenim görüyorum. Fotoğrafçılık ve videografiye hobi olarak başladığım yolculuk, zamanla büyük bir tutkuya dönüştü. Kendimi bu alanda sürekli geliştirerek profesyonel seviyeye ulaşmayı hedefliyorum.
+            </p>
+            <p>
+              Sinematik kısa videolar üretmek ve sokak fotoğrafları çekmek görsel anlatım tarzımı şekillendiriyor.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-white/10">
+            <div class="p-3.5 rounded-xl bg-black/40 border border-white/10">
+              <span class="font-display text-2xl font-bold text-amber-400 block">4K</span>
+              <span class="font-mono text-[11px] text-slate-400">Video Kurgu & Çekim</span>
+            </div>
+            <div class="p-3.5 rounded-xl bg-black/40 border border-white/10">
+              <span class="font-display text-2xl font-bold text-emerald-400 block">RAW</span>
+              <span class="font-mono text-[11px] text-slate-400">Fotoğraf İşleme</span>
+            </div>
+            <div class="p-3.5 rounded-xl bg-black/40 border border-white/10">
+              <span class="font-display text-2xl font-bold text-white block">POV & B-Roll</span>
+              <span class="font-mono text-[11px] text-slate-400">Dinamik Çekimler</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. İnteraktif Mini Oyun: "Manuel Odak Ustası" -->
+  <section id="minigame" class="py-20 px-4 md:px-8 border-t border-white/10 bg-body">
+    <div class="max-w-4xl mx-auto space-y-8">
+      
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs">
+          <i data-lucide="gamepad-2" class="w-3.5 h-3.5"></i>
+          <span>İNTERAKTİF DENEYİM</span>
+        </div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-white">
+          Manuel Odak Ustası
+        </h2>
+        <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">
+          Reflekslerini test et! Hareket eden obje alan derinliğine girdiğinde ve yeşil odak çizgisi belirdiğinde <strong>TIKLA</strong> veya <strong>BOŞLUK (SPACE)</strong> tuşuna basarak kusursuz kareyi yakala.
+        </p>
+      </div>
+
+      <div class="minigame-viewfinder relative w-full h-80 md:h-[420px] flex items-center justify-center">
+        <canvas id="gameCanvas" class="w-full h-full"></canvas>
+        <div id="gameFlash" class="shutter-flash"></div>
+
+        <div class="absolute top-4 left-4 flex items-center gap-2 pointer-events-none">
+          <span class="hud-badge text-xs text-emerald-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            ODAK PEAKING: YEŞİL = NET ODAK
+          </span>
+        </div>
+
+        <div class="absolute top-4 right-4 pointer-events-none">
+          <span id="gameHighScore" class="hud-badge font-mono text-xs text-amber-400">En Yüksek: %0 Netlik</span>
+        </div>
+
+        <div class="absolute bottom-4 left-6 right-6 flex items-center gap-4 bg-black/80 backdrop-blur-md p-3 rounded-xl border border-white/10 pointer-events-none">
+          <span class="font-mono text-xs text-slate-400">ODAK DÜZLEMİ:</span>
+          <div class="flex-1 h-2 rounded-full bg-white/10 overflow-hidden">
+            <div id="gameFocusMeter" class="h-full bg-amber-500 transition-all duration-75" style="width: 50%;"></div>
+          </div>
+          <span class="font-mono text-xs text-emerald-400">ƒ/4.0 G</span>
+        </div>
+
+        <!-- Polaroid Sonuç Kartı -->
+        <div id="gameResultCard" class="absolute inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 z-30 hidden">
+          <div class="polaroid-card max-w-sm w-full text-center space-y-4">
+            <div class="w-full h-40 bg-surface rounded overflow-hidden relative">
+              <img src="game-subject.jpg" alt="Çekilen Kare (Ayçiçekleri)" class="w-full h-full object-cover" />
+              <div class="absolute top-2 left-2 hud-badge bg-black/80 text-emerald-400 text-[10px]">1/2000s İLE ÇEKİLDİ</div>
+            </div>
+            <div class="space-y-1">
+              <div class="font-mono text-3xl font-extrabold text-slate-900" id="gameScorePercent">%98</div>
+              <div id="gameScoreBadge" class="hud-badge font-mono text-xs text-emerald-600">KUSURSUZ ODAK: %100 NET</div>
+              <p class="font-sans text-xs text-slate-600 pt-1" id="gameScoreMsg">Mükemmel! Jilet gibi keskin bir kare yakaladın.</p>
+            </div>
+            <div class="flex items-center gap-2 pt-2">
+              <button id="gamePlayAgainBtn" class="flex-1 py-2.5 rounded-lg bg-slate-900 text-white font-mono text-xs font-semibold hover:bg-black transition">
+                TEKRAR DENE
+              </button>
+              <a href="#contact" class="flex-1 py-2.5 rounded-lg bg-amber-500 text-black font-mono text-xs font-bold hover:bg-amber-600 transition text-center">
+                İLETİŞİME GEÇ
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flex justify-center">
+        <button id="gameShootBtn" class="px-8 py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-base flex items-center gap-3 transition transform hover:scale-105 shadow-lg shadow-red-600/30 cursor-pointer">
+          <i data-lucide="camera" class="w-5 h-5"></i>
+          <span>TIKLA & ÇEK (VEYA SPACE TUŞUNA BAS)</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6. İletişim / Klaket Formu (Sade ve Net) -->
+  <section id="contact" class="py-20 px-4 md:px-8 border-t border-white/10 bg-obsidian">
+    <div class="max-w-2xl mx-auto space-y-8">
+      
+      <div class="text-center space-y-2">
+        <span class="font-mono text-xs text-amber-500 uppercase tracking-wider block">// BANA ULAŞIN</span>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-white">
+          İletişim
+        </h2>
+        <p class="text-slate-400 text-sm max-w-md mx-auto">
+          Projeleriniz, çekim talepleriniz veya iş birliği için aşağıdaki formu doldurabilir veya doğrudan e-posta gönderebilirsiniz.
+        </p>
+      </div>
+
+      <!-- Klaket Formu -->
+      <div class="clapperboard-container">
+        
+        <div id="clapperTop" class="clapper-top flex items-center justify-between px-6" title="Klaketi Vur!">
+          <span class="font-mono text-xs font-bold text-black bg-white px-2 py-0.5 rounded">
+            FK PORTFOLYO
+          </span>
+          <span class="font-mono text-xs font-bold text-black bg-white px-2 py-0.5 rounded flex items-center gap-1">
+            <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> KLAKET SESİ
+          </span>
+        </div>
+
+        <div class="clapper-header-bar bg-black/40 text-slate-400">
+          <div class="clapper-header-cell">
+            <span class="block text-[9px] text-slate-500">KİŞİ</span>
+            <span class="text-white font-bold">FURKAN KARAKUŞ</span>
+          </div>
+          <div class="clapper-header-cell">
+            <span class="block text-[9px] text-slate-500">ALAN</span>
+            <span class="text-amber-500 font-bold">FOTOĞRAF & VİDEO</span>
+          </div>
+          <div class="clapper-header-cell">
+            <span class="block text-[9px] text-slate-500">DURUM</span>
+            <span class="text-emerald-400 font-bold">MÜSAİT</span>
+          </div>
+          <div class="clapper-header-cell">
+            <span class="block text-[9px] text-slate-500">KONUM</span>
+            <span class="text-white font-bold">DÜNYA</span>
+          </div>
+        </div>
+
+        <form id="contactForm" class="p-6 md:p-8 space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="space-y-1.5">
+              <label class="font-mono text-xs text-slate-400 uppercase block">ADINIZ SOYADINIZ *</label>
+              <input type="text" name="name" id="contactName" required placeholder="Adınız Soyadınız" class="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white placeholder-slate-500 focus:border-amber-500 focus:outline-none text-sm" />
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="font-mono text-xs text-slate-400 uppercase block">E-POSTA ADRESİNİZ *</label>
+              <input type="email" name="email" id="contactEmail" required placeholder="ornek@mail.com" class="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white placeholder-slate-500 focus:border-amber-500 focus:outline-none text-sm" />
+            </div>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="font-mono text-xs text-slate-400 uppercase block">KONU *</label>
+            <input type="text" name="subject" id="contactSubject" required placeholder="Çekim Talebi / Proje Hakkında" class="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white placeholder-slate-500 focus:border-amber-500 focus:outline-none text-sm" />
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="font-mono text-xs text-slate-400 uppercase block">MESAJINIZ *</label>
+            <textarea name="message" id="contactMessage" rows="4" required placeholder="Mesajınızı buraya yazabilirsiniz..." class="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white placeholder-slate-500 focus:border-amber-500 focus:outline-none text-sm"></textarea>
+          </div>
+
+          <!-- Hata Bildirim Kutusu -->
+          <div id="contactErrorMessage" class="hidden p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-mono flex items-center gap-2">
+            <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+            <span id="contactErrorText">Mesaj gönderilemedi, lütfen tekrar deneyin.</span>
+          </div>
+
+          <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <button type="submit" id="contactSubmitBtn" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-black font-bold text-sm flex items-center justify-center gap-2 transition transform hover:scale-105 shadow-md shadow-amber-500/20 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+              <span id="contactSubmitText" class="flex items-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Mesaj Gönder</span>
+              </span>
+              <span id="contactSubmitSpinner" class="hidden items-center gap-2">
+                <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+                <span>Gönderiliyor...</span>
+              </span>
+            </button>
+
+            <a href="mailto:info@furkankarakus.com" class="font-mono text-xs text-slate-400 hover:text-amber-400 transition flex items-center gap-1.5" data-focal="E-Posta">
+              <i data-lucide="mail" class="w-4 h-4 text-amber-500"></i>
+              <span>info@furkankarakus.com</span>
+            </a>
+          </div>
+        </form>
+
+        <div id="contactSuccessState" class="p-10 text-center space-y-3 hidden">
+          <div class="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-emerald-400 mx-auto">
+            <i data-lucide="check" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-display text-2xl font-bold text-white">Mesajınız Başarıyla İletildi!</h3>
+          <p class="text-slate-300 max-w-sm mx-auto text-sm">
+            Mesajınız başarıyla iletildi, en kısa sürede dönüş yapacağım.
+          </p>
+          <button id="contactResetBtn" class="px-5 py-2 rounded-xl bg-white/10 text-white font-mono text-xs hover:bg-white/20 transition mt-2 cursor-pointer">
+            Yeni Mesaj Gönder
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Sosyal Medya (Sadece Instagram & YouTube - Turuncu Çizgisel İkonlar) -->
+      <div class="pt-4 flex flex-wrap items-center justify-center gap-4 text-xs font-mono">
+        <a href="https://www.instagram.com/furkankarakuss0/" target="_blank" rel="noopener" class="hud-badge hover:border-amber-500 hover:text-amber-400 transition flex items-center gap-2.5 group" data-focal="Instagram">
+          <svg class="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2.5" y="2.5" width="19" height="19" rx="6" ry="6"></rect>
+            <circle cx="12" cy="12" r="4.8"></circle>
+            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle>
+          </svg>
+          <span class="font-bold">INSTAGRAM</span>
+        </a>
+        <a href="https://www.youtube.com/@sadeceefurkan" target="_blank" rel="noopener" class="hud-badge hover:border-amber-500 hover:text-amber-400 transition flex items-center gap-2.5 group" data-focal="YouTube">
+          <svg class="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3.5" width="20" height="17" rx="6" ry="6"></rect>
+            <polygon points="10 8 16 12 10 16"></polygon>
+          </svg>
+          <span class="font-bold">YOUTUBE</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7. Alt Bilgi / Footer -->
+  <footer class="py-8 px-4 md:px-8 border-t border-white/10 bg-black text-slate-500 font-mono text-xs">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <img src="logo.jpg" alt="Logo" class="w-6 h-6 rounded-lg object-cover border border-white/15 shadow-sm" />
+        <span>© 2026 Furkan Karakuş. Tüm hakları saklıdır.</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>İstanbul // GMT+3</span>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Fotoğraf Büyütme Modalı (Sade & Tam Ekran) -->
+  <div id="lightboxModal" class="modal-backdrop" onclick="closeActiveModal()">
+    <div class="max-w-5xl w-full mx-4 bg-transparent flex flex-col items-center justify-center relative" onclick="event.stopPropagation()">
+      <div class="relative max-h-[85vh] rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black flex items-center justify-center">
+        <img id="lightboxImg" src="" alt="Tam Ekran Görsel" class="max-h-[85vh] max-w-full w-auto object-contain" />
+        <button onclick="closeActiveModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center hover:bg-amber-500 hover:text-black transition shadow-lg cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Oynatıcı Modalı (Sade & Tam Ekran) -->
+  <div id="videoModal" class="modal-backdrop" onclick="closeActiveModal()">
+    <div class="max-w-5xl w-full mx-4 bg-transparent flex flex-col items-center justify-center relative" onclick="event.stopPropagation()">
+      <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-black flex items-center justify-center">
+        <video id="cinemaVideoPlayer" controls class="w-full h-full object-cover"></video>
+        <button onclick="closeActiveModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/80 border border-white/20 text-white flex items-center justify-center hover:bg-amber-500 hover:text-black transition z-20 shadow-lg cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pexels CMS Yapılandırma Modalı -->
+  <div id="pexelsConfigModal" class="modal-backdrop" onclick="closeActiveModal()">
+    <div class="max-w-md w-full mx-4 bg-surface-elevated border border-white/20 rounded-2xl overflow-hidden shadow-2xl p-6 space-y-5" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div class="flex items-center gap-2">
+          <i data-lucide="cloud-cog" class="w-5 h-5 text-emerald-400"></i>
+          <h3 class="font-display text-lg font-bold text-white">Pexels CMS Ayarları</h3>
+        </div>
+        <button onclick="closeActiveModal()" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="pexelsConfigForm" class="space-y-4">
+        <div class="space-y-1.5">
+          <label class="font-mono text-xs text-slate-300 block">PEXELS REST API KEY</label>
+          <input type="password" id="pexelsApiKeyInput" placeholder="Pexels API Anahtarınızı yapıştırın..." class="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white placeholder-slate-500 focus:border-emerald-400 focus:outline-none text-xs font-mono" />
+          <span class="text-[10px] text-slate-500 block">API anahtarı girildiğinde fotoğraflar ve 4K videolar doğrudan profilinizden dinamik çekilir.</span>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="font-mono text-xs text-slate-300 block">PEXELS KOLEKSİYON ID (İSTEĞE BAĞLI)</label>
+          <input type="text" id="pexelsCollectionIdInput" placeholder="Örn: abc123xyz" class="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white placeholder-slate-500 focus:border-emerald-400 focus:outline-none text-xs font-mono" />
+          <span class="text-[10px] text-slate-500 block">Belirli bir Pexels koleksiyonunuzu otomatik senkronize etmek için koleksiyon ID'si yazın.</span>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeActiveModal()" class="px-4 py-2 rounded-xl bg-white/5 text-slate-300 font-mono text-xs hover:bg-white/10 transition">
+            Vazgeç
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-black font-bold font-mono text-xs flex items-center gap-1.5 transition">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            <span>Kaydet & Senkronize Et</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>

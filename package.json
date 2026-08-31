@@ -1,0 +1,19 @@
+{
+  "name": "furkan-portfolio",
+  "version": "1.0.0",
+  "description": "Modern Kişisel Portfolyo & CV Web Sitesi",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server ."
+  },
+  "keywords": [
+    "portfolio",
+    "cv",
+    "react",
+    "tailwind",
+    "developer"
+  ],
+  "author": "Furkan",
+  "license": "MIT"
+}
