@@ -99,16 +99,66 @@
         <a href="#contact" class="hover:text-amber-400 transition" data-focal="İletişim">İletişim</a>
       </nav>
 
-      <!-- Aksiyon & Ses Butonu (Sağdaki Turuncu Buton Kaldırıldı) -->
-      <div class="flex items-center gap-3">
+      <!-- Aksiyonlar: Tema Switch, Ses Butonu & Mobil Burger Menü -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Tema Değiştirici (Dark / Light) -->
+        <button id="themeToggleBtn" class="hud-badge text-xs hover:border-amber-500 cursor-pointer" title="Karanlık / Aydınlık Mod" data-focal="Tema">
+          <i id="themeToggleIcon" data-lucide="sun" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span id="themeToggleLabel" class="hidden sm:inline">GÜNDÜZ</span>
+        </button>
+
+        <!-- Ses Aç/Kapa -->
         <button id="soundToggleBtn" class="hud-badge text-xs hover:border-amber-500 cursor-pointer" title="Ses Efektlerini Aç/Kapat" data-focal="Ses">
           <i id="soundToggleIcon" data-lucide="volume-x" class="w-3.5 h-3.5"></i>
           <span id="soundToggleLabel" class="hidden sm:inline">SES: KAPALI</span>
+        </button>
+
+        <!-- Mobil Menü Burger Butonu -->
+        <button id="mobileMenuToggle" class="lg:hidden p-2 rounded-xl bg-surface border border-white/10 text-slate-200 hover:text-amber-400 hover:border-amber-500/50 transition cursor-pointer flex items-center justify-center" aria-label="Menüyü Aç/Kapat" data-focal="Menü">
+          <i id="mobileMenuIcon" data-lucide="menu" class="w-5 h-5"></i>
         </button>
       </div>
 
     </div>
   </header>
+
+  <!-- Mobil Menü Drawer / Overlay -->
+  <div id="mobileMenuOverlay" class="fixed inset-0 bg-obsidian/95 backdrop-blur-2xl z-40 lg:hidden opacity-0 pointer-events-none transition-all duration-300 flex flex-col justify-between p-6 pt-24">
+    <nav class="flex flex-col gap-2 text-base font-medium">
+      <a href="#hero" class="mobile-nav-link p-3.5 rounded-xl hover:bg-white/5 text-slate-200 hover:text-amber-400 transition flex items-center justify-between" data-focal="Ana Sayfa">
+        <span>Ana Sayfa</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+      </a>
+      <a href="#portfolio" class="mobile-nav-link p-3.5 rounded-xl hover:bg-white/5 text-slate-200 hover:text-amber-400 transition flex items-center justify-between" data-focal="Fotoğraflar">
+        <span>Fotoğraflar</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+      </a>
+      <a href="#gear" class="mobile-nav-link p-3.5 rounded-xl hover:bg-white/5 text-slate-200 hover:text-amber-400 transition flex items-center justify-between" data-focal="Ekipmanlar">
+        <span>Çantamda Neler Var?</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+      </a>
+      <a href="#about" class="mobile-nav-link p-3.5 rounded-xl hover:bg-white/5 text-slate-200 hover:text-amber-400 transition flex items-center justify-between" data-focal="Hakkımda">
+        <span>Hakkımda</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+      </a>
+      <a href="#minigame" class="mobile-nav-link p-3.5 rounded-xl hover:bg-white/5 text-slate-200 hover:text-amber-400 transition flex items-center justify-between" data-focal="Odağı Yakala">
+        <span class="flex items-center gap-2">
+          <i data-lucide="crosshair" class="w-4 h-4 text-amber-500"></i>
+          <span>Odağı Yakala</span>
+        </span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+      </a>
+      <a href="#contact" class="mobile-nav-link p-3.5 rounded-xl hover:bg-white/5 text-slate-200 hover:text-amber-400 transition flex items-center justify-between" data-focal="İletişim">
+        <span>İletişim</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+      </a>
+    </nav>
+
+    <div class="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono text-slate-400">
+      <span>FURKAN KARAKUŞ</span>
+      <span class="text-amber-500">VIDEOGRAPHER & PHOTOGRAPHER</span>
+    </div>
+  </div>
 
   <!-- 1. Ana Bölüm / Hero -->
   <section id="hero" class="relative min-h-[85vh] flex items-center justify-center pt-28 pb-16 px-4 md:px-8 overflow-hidden">
@@ -575,6 +625,11 @@
       </form>
     </div>
   </div>
+
+  <!-- Yukarı Çıkma Kısayol Tuşu (Scroll To Top) -->
+  <button id="scrollToTopBtn" class="fixed bottom-6 right-6 z-40 p-3.5 rounded-full bg-obsidian/85 backdrop-blur-md border border-white/20 text-slate-200 hover:text-amber-400 hover:border-amber-500/60 transition-all duration-300 shadow-2xl opacity-0 pointer-events-none translate-y-4 cursor-pointer group" title="Yukarı Çık" aria-label="Yukarı Çık" data-focal="Yukarı">
+    <i data-lucide="arrow-up" class="w-4 h-4 group-hover:-translate-y-0.5 transition-transform"></i>
+  </button>
 
   <!-- JavaScript -->
   <script src="app.js"></script>

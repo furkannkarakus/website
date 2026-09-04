@@ -5,6 +5,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
   initAudioEngine();
   initCameraReticle();
   initHeroSpotlight();
@@ -15,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initFocusMiniGame();
   initContactForm();
   initGrainAndSoundToggles();
+  initMobileMenu();
+  initScrollToTop();
   initSmoothScroll();
 });
 
@@ -1305,7 +1308,107 @@ function initGrainAndSoundToggles() {
 }
 
 /* ==========================================================================
-   10. Pürüzsüz Kaydırma
+   10. Tema Değiştirici (Dark / Light Mode)
+   ========================================================================== */
+function initThemeToggle() {
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  const themeIcon = document.getElementById('themeToggleIcon');
+  const themeLabel = document.getElementById('themeToggleLabel');
+
+  const savedTheme = localStorage.getItem('fk_theme') || 'dark';
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.classList.add('light');
+      if (themeIcon) themeIcon.setAttribute('data-lucide', 'moon');
+      if (themeLabel) themeLabel.textContent = 'GECE';
+      themeToggleBtn?.classList.add('hud-badge-active');
+    } else {
+      document.documentElement.classList.remove('light');
+      if (themeIcon) themeIcon.setAttribute('data-lucide', 'sun');
+      if (themeLabel) themeLabel.textContent = 'GÜNDÜZ';
+      themeToggleBtn?.classList.remove('hud-badge-active');
+    }
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  applyTheme(savedTheme);
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      playDialClick();
+      const isCurrentlyLight = document.documentElement.classList.contains('light');
+      const newTheme = isCurrentlyLight ? 'dark' : 'light';
+      localStorage.setItem('fk_theme', newTheme);
+      applyTheme(newTheme);
+    });
+  }
+}
+
+/* ==========================================================================
+   11. Mobil Burger Menü
+   ========================================================================== */
+function initMobileMenu() {
+  const toggleBtn = document.getElementById('mobileMenuToggle');
+  const menuIcon = document.getElementById('mobileMenuIcon');
+  const overlay = document.getElementById('mobileMenuOverlay');
+  const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+  if (!toggleBtn || !overlay) return;
+
+  function toggleMenu(forceClose = false) {
+    playDialClick();
+    const isOpen = forceClose ? false : !overlay.classList.contains('menu-open');
+    if (isOpen) {
+      overlay.classList.add('menu-open');
+      if (menuIcon) menuIcon.setAttribute('data-lucide', 'x');
+      document.body.style.overflow = 'hidden';
+    } else {
+      overlay.classList.remove('menu-open');
+      if (menuIcon) menuIcon.setAttribute('data-lucide', 'menu');
+      document.body.style.overflow = '';
+    }
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  toggleBtn.addEventListener('click', () => toggleMenu());
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      toggleMenu(true);
+    });
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('menu-open')) {
+      toggleMenu(true);
+    }
+  });
+}
+
+/* ==========================================================================
+   12. Yukarı Çıkma Kısayol Tuşu (Scroll to Top)
+   ========================================================================== */
+function initScrollToTop() {
+  const scrollBtn = document.getElementById('scrollToTopBtn');
+  if (!scrollBtn) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      scrollBtn.classList.add('btn-visible');
+    } else {
+      scrollBtn.classList.remove('btn-visible');
+    }
+  }, { passive: true });
+
+  scrollBtn.addEventListener('click', () => {
+    playDialClick();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+/* ==========================================================================
+   13. Pürüzsüz Kaydırma
    ========================================================================== */
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
