@@ -1282,11 +1282,24 @@ function initContactForm() {
 }
 
 /* ==========================================================================
-   9. Ses Düğmesi
+   9. Ses Düğmesi (Açık: Dalgalı Hoparlör / Kapalı: Çarpılı Sessiz Hoparlör)
    ========================================================================== */
+const soundVectorIcons = {
+  on: `<svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+  </svg>`,
+  off: `<svg class="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <line x1="23" y1="9" x2="17" y2="15"></line>
+    <line x1="17" y1="9" x2="23" y2="15"></line>
+  </svg>`
+};
+
 function initGrainAndSoundToggles() {
   const soundToggleBtn = document.getElementById('soundToggleBtn');
-  const soundIcon = document.getElementById('soundToggleIcon');
+  const soundWrapper = document.getElementById('soundToggleIconWrapper');
   const soundLabel = document.getElementById('soundToggleLabel');
 
   if (soundToggleBtn) {
@@ -1294,15 +1307,14 @@ function initGrainAndSoundToggles() {
       soundEnabled = !soundEnabled;
       if (soundEnabled) {
         playFocusBeep();
-        if (soundIcon) soundIcon.setAttribute('data-lucide', 'volume-2');
+        if (soundWrapper) soundWrapper.innerHTML = soundVectorIcons.on;
         if (soundLabel) soundLabel.textContent = 'SES: AÇIK';
         soundToggleBtn.classList.add('hud-badge-active');
       } else {
-        if (soundIcon) soundIcon.setAttribute('data-lucide', 'volume-x');
+        if (soundWrapper) soundWrapper.innerHTML = soundVectorIcons.off;
         if (soundLabel) soundLabel.textContent = 'SES: KAPALI';
         soundToggleBtn.classList.remove('hud-badge-active');
       }
-      if (window.lucide) window.lucide.createIcons();
     });
   }
 }
@@ -1310,9 +1322,26 @@ function initGrainAndSoundToggles() {
 /* ==========================================================================
    10. Tema Değiştirici (Dark / Light Mode)
    ========================================================================== */
+const themeVectorIcons = {
+  sun: `<svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2"></path>
+    <path d="M12 20v2"></path>
+    <path d="m4.93 4.93 1.41 1.41"></path>
+    <path d="m17.66 17.66 1.41 1.41"></path>
+    <path d="M2 12h2"></path>
+    <path d="M20 12h2"></path>
+    <path d="m6.34 17.66-1.41 1.41"></path>
+    <path d="m19.07 4.93-1.41 1.41"></path>
+  </svg>`,
+  moon: `<svg class="w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+  </svg>`
+};
+
 function initThemeToggle() {
   const themeToggleBtn = document.getElementById('themeToggleBtn');
-  const themeIcon = document.getElementById('themeToggleIcon');
+  const themeWrapper = document.getElementById('themeToggleIconWrapper');
   const themeLabel = document.getElementById('themeToggleLabel');
 
   const savedTheme = localStorage.getItem('fk_theme') || 'dark';
@@ -1320,16 +1349,15 @@ function initThemeToggle() {
   function applyTheme(theme) {
     if (theme === 'light') {
       document.documentElement.classList.add('light');
-      if (themeIcon) themeIcon.setAttribute('data-lucide', 'moon');
+      if (themeWrapper) themeWrapper.innerHTML = themeVectorIcons.moon;
       if (themeLabel) themeLabel.textContent = 'GECE';
       themeToggleBtn?.classList.add('hud-badge-active');
     } else {
       document.documentElement.classList.remove('light');
-      if (themeIcon) themeIcon.setAttribute('data-lucide', 'sun');
+      if (themeWrapper) themeWrapper.innerHTML = themeVectorIcons.sun;
       if (themeLabel) themeLabel.textContent = 'GÜNDÜZ';
       themeToggleBtn?.classList.remove('hud-badge-active');
     }
-    if (window.lucide) window.lucide.createIcons();
   }
 
   applyTheme(savedTheme);

@@ -512,50 +512,50 @@ body.cursor-clicking .camera-reticle {
 }
 
 /* ==========================================================================
-   GÜNDÜZ MODU (LIGHT MODE) TEMASI
+   GÜNDÜZ MODU (LIGHT MODE) TEMASI (Soft, Sıcak & Göz Yormayan Krem/Keten Tonları)
    ========================================================================== */
 html.light {
-  --bg-obsidian: #f8fafc;
-  --bg-body: #f1f5f9;
-  --bg-surface: #ffffff;
-  --bg-surface-elevated: #f8fafc;
-  --border-subtle: rgba(0, 0, 0, 0.08);
-  --border-hover: rgba(0, 0, 0, 0.2);
-  --text-primary: #0f172a;
-  --text-muted: #475569;
-  --text-dim: #94a3b8;
+  --bg-obsidian: #f5f2eb;
+  --bg-body: #ece7de;
+  --bg-surface: #fdfcf9;
+  --bg-surface-elevated: #f7f4ed;
+  --border-subtle: rgba(60, 50, 40, 0.08);
+  --border-hover: rgba(60, 50, 40, 0.22);
+  --text-primary: #1c1917;
+  --text-muted: #57534e;
+  --text-dim: #78716c;
 }
 
 html.light body {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+  background-color: #f5f2eb !important;
+  color: #1c1917 !important;
 }
 
 html.light header {
-  background-color: rgba(248, 250, 252, 0.94) !important;
-  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: rgba(245, 242, 235, 0.94) !important;
+  border-bottom-color: rgba(60, 50, 40, 0.09) !important;
 }
 
 html.light .bg-obsidian {
-  background-color: #f8fafc !important;
+  background-color: #f5f2eb !important;
 }
 
 html.light .bg-body {
-  background-color: #f1f5f9 !important;
+  background-color: #ece7de !important;
 }
 
 html.light .bg-surface {
-  background-color: #ffffff !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: #fdfcf9 !important;
+  border-color: rgba(60, 50, 40, 0.09) !important;
 }
 
 html.light .bg-surface-elevated {
-  background-color: #f8fafc !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
+  background-color: #f7f4ed !important;
+  border-color: rgba(60, 50, 40, 0.12) !important;
 }
 
 html.light .bg-black {
-  background-color: #f1f5f9 !important;
+  background-color: #e8e3d8 !important;
 }
 
 html.light .bg-black\/40,
@@ -563,89 +563,89 @@ html.light .bg-black\/50,
 html.light .bg-black\/60,
 html.light .bg-black\/80,
 html.light .bg-black\/85 {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
+  background-color: rgba(253, 252, 249, 0.88) !important;
+  border-color: rgba(60, 50, 40, 0.1) !important;
 }
 
 html.light .text-white {
-  color: #0f172a !important;
+  color: #1c1917 !important;
 }
 
 html.light .text-slate-100,
 html.light .text-slate-200,
 html.light .text-slate-300 {
-  color: #1e293b !important;
+  color: #292524 !important;
 }
 
 html.light .text-slate-400 {
-  color: #475569 !important;
+  color: #57534e !important;
 }
 
 html.light .text-slate-500 {
-  color: #64748b !important;
+  color: #78716c !important;
 }
 
 html.light .border-white\/5,
 html.light .border-white\/10,
 html.light .border-white\/15,
 html.light .border-white\/20 {
-  border-color: rgba(0, 0, 0, 0.09) !important;
+  border-color: rgba(60, 50, 40, 0.1) !important;
 }
 
 html.light .hud-badge {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(0, 0, 0, 0.12);
-  color: #334155;
+  background: rgba(253, 252, 249, 0.92);
+  border-color: rgba(60, 50, 40, 0.13);
+  color: #292524;
 }
 
 html.light .hud-badge:hover,
 html.light .hud-badge-active {
   border-color: var(--accent-amber);
-  color: #0f172a;
+  color: #1c1917;
   background: #ffffff;
 }
 
 html.light .camera-reticle .reticle-corner {
-  border-color: rgba(15, 23, 42, 0.75);
+  border-color: rgba(28, 25, 23, 0.75);
 }
 
 html.light .reticle-hud {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(0, 0, 0, 0.15);
-  color: #0f172a;
+  background: rgba(253, 252, 249, 0.96);
+  border-color: rgba(60, 50, 40, 0.15);
+  color: #1c1917;
 }
 
 html.light .clapperboard-container {
-  background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.15);
+  background: #fdfcf9;
+  border-color: rgba(60, 50, 40, 0.14);
 }
 
 html.light .clapper-top {
   background: repeating-linear-gradient(
     -45deg,
-    #0f172a 0px,
-    #0f172a 20px,
-    #e2e8f0 20px,
-    #e2e8f0 40px
+    #1c1917 0px,
+    #1c1917 20px,
+    #e7e2d6 20px,
+    #e7e2d6 40px
   );
-  border-bottom-color: rgba(0, 0, 0, 0.15);
+  border-bottom-color: rgba(60, 50, 40, 0.15);
 }
 
 html.light .clapper-top span {
-  background: #0f172a !important;
-  color: #ffffff !important;
+  background: #1c1917 !important;
+  color: #fdfcf9 !important;
 }
 
 html.light input,
 html.light textarea {
   background-color: #ffffff !important;
-  border-color: rgba(0, 0, 0, 0.15) !important;
-  color: #0f172a !important;
+  border-color: rgba(60, 50, 40, 0.16) !important;
+  color: #1c1917 !important;
 }
 
 html.light input::placeholder,
 html.light textarea::placeholder {
-  color: #94a3b8 !important;
+  color: #a8a29e !important;
 }
 
 /* ==========================================================================
@@ -663,13 +663,13 @@ html.light textarea::placeholder {
 }
 
 html.light #scrollToTopBtn {
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  border-color: rgba(0, 0, 0, 0.15) !important;
-  color: #0f172a !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15) !important;
+  background-color: rgba(253, 252, 249, 0.94) !important;
+  border-color: rgba(60, 50, 40, 0.15) !important;
+  color: #1c1917 !important;
+  box-shadow: 0 10px 25px -5px rgba(60, 50, 40, 0.15) !important;
 }
 
 html.light #mobileMenuOverlay {
-  background-color: rgba(248, 250, 252, 0.96) !important;
+  background-color: rgba(245, 242, 235, 0.97) !important;
 }
 
